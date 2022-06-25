@@ -100,27 +100,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     /*
-     * ┌───┬───┬───┬───┬───┐
-     * │Rst│TOG│MOD│mod│Ver│
+     * ┌───┌───┐───┬───┬───┐
+     * │Rst│TOG│MOD│TPK│TUG│
      * ├───┼───┼───┼───┼───┤
-     * │Hu+│St+│Sp+│Br+│   │
+     * │Hu+│ × │Sp-│Sp+│Br-│
      * ├───┼───┼───┼───┼───┤
-     * │Hu-│St-│Sp-│Br-│   │
-     * ├───┼───┼───┼───┤   │
-     * │   │   │   │TPK│   │
-     * ├───┼───┼───┼───┼───┤
-     * │   │   │   │TUG│   │
-     * ├───┼───┴───┼───┤   │
-     * │   │       │   │   │
-     * └───┴───────┴───┴───┘
+     * │Hu-│Hom│ ↑ │PgU│   │
+     * ├───┼───┼───┼───┤Br+│
+     * │St+│ ← │ × │ → │   │
+     * ├───┼───┼───┼───┤───┤
+     * │St-│End│ ↓ │PgD│   │
+     * ├───┼───┴───┼───┤Ent│
+     * │mo1│Insert │Del│   │
+     * └───┴───────┴───┘───┘
      */
     [_FN] = LAYOUT_numpad_6x5(
-        QK_BOOT, RGB_TOG, RGB_MOD, RGB_RMOD, KB_VRSN,
-        RGB_HUI, RGB_SAI, RGB_SPI, RGB_VAI, _______,
-        RGB_HUD, RGB_SAD, RGB_SPD, RGB_VAD, _______,
-        MO(_L4), _______, _______, RGB_TPK,
-        MO(_L3), _______, _______, RGB_TUG, _______,
-        _______, _______,          _______
+        QK_BOOT, RGB_TOG, RGB_MOD, RGB_TPK, RGB_TUG,
+        RGB_HUI, XXXXXXX, RGB_SPD, RGB_SPI, RGB_VAD,
+        RGB_HUD, KC_HOME, KC_UP,   KC_PGUP, RGB_VAI,
+        RGB_SAI, KC_LEFT, XXXXXXX, KC_RGHT,
+        RGB_SAD, KC_END,  KC_DOWN, KC_PGDN, KC_ENT,
+        _______, KC_INS,           KC_DEL
     ),
 
     /* 3 extra layers incase you want to map the top row to layer buttons
@@ -148,6 +148,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_L4] = LAYOUT_numpad_6x5(
+        _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,
+        _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,
+        _______, _______,          _______
+    ),
+
+    [_L5] = LAYOUT_numpad_6x5(
         _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,

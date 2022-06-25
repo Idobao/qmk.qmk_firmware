@@ -24,9 +24,10 @@ typedef union {
 enum montex_layers {
   _BASE,
   _FN,
-  _KBS,     // keyboard specific
-  _EMPTY3,  // Just to initialize dynamic layers in VIA
-  _EMPTY4
+  _EMPTY2,  // Just to initialize dynamic layers in VIA
+  _EMPTY3,
+  _EMPTY4,
+  _EMPTY5
 };
 
 enum {
@@ -77,54 +78,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /*
      * ┌───┬───┬───┬───┬───┐
-     * │Rst│   │   │PSr│SLk│
+     * │Rst│TOG│MOD│TPK│TUG│
      * ├───┼───┼───┼───┼───┤
-     * │MO5│   │   │   │   │
+     * │Hu+│TNL│Sp-│Sp+│Br-│
      * ├───┼───┼───┼───┼───┤
-     * │MO4│Hom│ ↑ │PgU│   │
-     * ├───┼───┼───┼───┤   │
-     * │MO3│ ← │   │ → │   │
-     * ├───┼───┼───┼───┼───┤
-     * │MO2│End│ ↓ │PgD│   │
+     * │Hu-│Hom│ ↑ │PgU│   │
+     * ├───┼───┼───┼───┤Br+│
+     * │St+│ ← │ × │ → │   │
+     * ├───┼───┼───┼───┤───┤
+     * │St-│End│ ↓ │PgD│   │
      * ├───┼───┴───┼───┤Ent│
-     * │ · │Insert │Del│   │
+     * │mo1│Insert │Del│   │
      * └───┴───────┴───┴───┘
      */
     [_FN] = LAYOUT_numpad_6x5(
-        QK_BOOT, _______, _______, KC_PSCR, KC_SLCK,
-        _______, _______, _______, _______, _______,
-        MO(4),   KC_HOME, KC_UP,   KC_PGUP, _______,
-        MO(3),   KC_LEFT, XXXXXXX, KC_RGHT,
-        MO(2),   KC_END,  KC_DOWN, KC_PGDN, KC_ENT,
+        QK_BOOT, RGB_TOG, RGB_MOD, RGB_TPK, RGB_TUG,
+        RGB_HUI, KB_NLED, RGB_SPD, RGB_SPI, RGB_VAD,
+        RGB_HUD, KC_HOME, KC_UP,   KC_PGUP, RGB_VAI,
+        RGB_SAI, KC_LEFT, XXXXXXX, KC_RGHT,
+        RGB_SAD, KC_END,  KC_DOWN, KC_PGDN, KC_ENT,
         _______, KC_INS,           KC_DEL
     ),
 
     /*  4 extra layers incase you want to map the top row to layer buttons
      * ┌───┬───┬───┬───┬───┐
-     * │ × │TOG│MOD│mod│Ver│
-     * ├───┼───┼───┼───┼───┤
-     * │Hu+│St+│Sp+│Br+│TNL│
-     * ├───┼───┼───┼───┼───┤
-     * │Hu-│St-│Sp-│Br-│   │
-     * ├───┼───┼───┼───┤   │
-     * │   │   │   │TPK│   │
-     * ├───┼───┼───┼───┼───┤
-     * │ · │   │   │TUG│   │
-     * ├───┼───┴───┼───┤   │
-     * │mo1│       │   │   │
-     * └───┴───────┴───┴───┘
-     */
-    [_KBS] = LAYOUT_numpad_6x5(
-        XXXXXXX, RGB_TOG, RGB_MOD, RGB_RMOD, KB_VRSN,
-        RGB_HUI, RGB_SAI, RGB_SPI, RGB_VAI, KB_NLED,
-        RGB_HUD, RGB_SAD, RGB_SPD, RGB_VAD, _______,
-        _______, _______, _______, RGB_TPK,
-        _______, _______, _______, RGB_TUG, _______,
-        _______, _______,          _______
-    ),
-
-    /* 3 extra layers incase you want to map the top row to layer buttons
-     * ┌───┬───┬───┬───┬───┐
      * │   │   │   │   │   │
      * ├───┼───┼───┼───┼───┤
      * │   │   │   │   │   │
@@ -132,12 +109,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * │   │   │   │   │   │
      * ├───┼───┼───┼───┤   │
      * │   │   │   │   │   │
-     * ├───┼───┼───┼───┼───┤
+     * ├───┼───┼───┼───┤───┤
      * │   │   │   │   │   │
      * ├───┼───┴───┼───┤   │
      * │   │       │   │   │
      * └───┴───────┴───┴───┘
      */
+    [_EMPTY2] = LAYOUT_numpad_6x5(
+        _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,
+        _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,
+        _______, _______,          _______
+    ),
+
     [_EMPTY3] = LAYOUT_numpad_6x5(
         _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,
@@ -148,6 +134,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_EMPTY4] = LAYOUT_numpad_6x5(
+        _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,
+        _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,
+        _______, _______,          _______
+    ),
+
+    [_EMPTY5] = LAYOUT_numpad_6x5(
         _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,
