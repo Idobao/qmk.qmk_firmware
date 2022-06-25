@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 /* ------------------------------------------------------------------
- * This is the IDOBAO factory default keymap ;)
+ * This is an alternative IDOBAO keymap featuring hardware level
+ * num-lock functionality for macOS users.
  * ------------------------------------------------------------------ */
 
 #include QMK_KEYBOARD_H
@@ -12,7 +13,7 @@
 typedef union {
     uint32_t raw;
     struct {
-        bool led_disable_numlock:1;  // set true to disable num-lock LED
+        bool __unused:1;  // set true to disable num-lock LED
         bool rgb_disable_perkey:1;
         #ifndef ID27_DISABLE_UNDERGLOW
         bool rgb_disable_underglow:1;
@@ -23,10 +24,11 @@ typedef union {
 
 enum montex_layers {
   _BASE,
+  _NL,
   _FN,
-  _KBS,     // keyboard specific
-  _EMPTY3,  // Just to initialize dynamic layers in VIA
-  _EMPTY4
+  _L3,
+  _L4,
+  _L5
 };
 
 enum {
@@ -35,7 +37,6 @@ enum {
     #ifndef ID27_DISABLE_UNDERGLOW
     RGB_TUG,           // Toggle Underglow
     #endif  // ID27_DISABLE_UNDERGLOW
-    KB_NLED = USER08,  // disable num-lock led
     #endif  // RGB_MATRIX_ENABLE
     KB_VRSN = USER09   // debug, type version
 };
@@ -43,7 +44,6 @@ enum {
 #ifndef RGB_MATRIX_ENABLE
     #define RGB_TPK _______
     #define RGB_TUG _______
-    #define KB_NLED _______
 #else
     #ifdef ID27_DISABLE_UNDERGLOW
         #define RGB_TUG _______
@@ -55,71 +55,71 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ┌───┬───┬───┬───┬───┐
      * │Esc│Mut│Vl-│Vl+│Bsp│
      * ├───┼───┼───┼───┼───┤
-     * │Ctr│Num│ / │ * │ - │
+     * │Ctr│TG1│ / │ * │ - │
      * ├───┼───┼───┼───┼───┤
-     * │Gui│ 7 │ 8 │ 9 │   │
+     * │Gui│Hom│ ↑ │PgU│   │
      * ├───┼───┼───┼───┤ + │
-     * │Alt│ 4 │ 5 │ 6 │   │
+     * │Alt│ ← │ × │ → │   │
      * ├───┼───┼───┼───┼───┤
-     * │Shi│ 1 │ 2 │ 3 │   │
+     * │Shi│End│ ↓ │PgD│   │
      * ├───┼───┴───┼───┤Ent│
-     * │MO1│ 0     │ . │   │
+     * │MO2│Insert │Del│   │
      * └───┴───────┴───┴───┘
-     */
+/     */
     [_BASE] = LAYOUT_numpad_6x5(
-        KC_GESC,   KC_MUTE,  KC_VOLD, KC_VOLU, KC_BSPC,
-        KC_LCTRL,  KC_NLCK,  KC_PSLS, KC_PAST, KC_PMNS,
-        KC_LGUI,   KC_P7,    KC_P8,   KC_P9,   KC_PPLS,
-        KC_LALT,   KC_P4,    KC_P5,   KC_P6,
-        KC_LSHIFT, KC_P1,    KC_P2,   KC_P3,   KC_PENT,
-        MO(1),     KC_P0,             KC_PDOT
+        KC_ESC,    KC_MUTE,  KC_VOLD, KC_VOLU, KC_BSPC,
+        KC_LCTRL,  TG(_NL),  KC_PSLS, KC_PAST, KC_PMNS,
+        KC_LGUI,   KC_HOME,  KC_UP,   KC_PGUP, KC_PPLS,
+        KC_LALT,   KC_LEFT,  XXXXXXX, KC_RGHT,
+        KC_LSHIFT, KC_END,   KC_DOWN, KC_PGDN, KC_ENT,
+        MO(_FN),   KC_INS,            KC_DEL
     ),
 
     /*
      * ┌───┬───┬───┬───┬───┐
-     * │Rst│   │   │PSr│SLk│
+     * │   │   │   │   │   │
      * ├───┼───┼───┼───┼───┤
-     * │MO5│   │   │   │   │
+     * │   │   │   │   │   │
      * ├───┼───┼───┼───┼───┤
-     * │MO4│Hom│ ↑ │PgU│   │
+     * │   │ 7 │ 8 │ 9 │   │
      * ├───┼───┼───┼───┤   │
-     * │MO3│ ← │   │ → │   │
+     * │   │ 4 │ 5 │ 6 │   │
      * ├───┼───┼───┼───┼───┤
-     * │MO2│End│ ↓ │PgD│   │
+     * │   │ 1 │ 2 │ 3 │   │
      * ├───┼───┴───┼───┤Ent│
-     * │ · │Insert │Del│   │
+     * │   │ 0     │ . │   │
      * └───┴───────┴───┴───┘
      */
-    [_FN] = LAYOUT_numpad_6x5(
-        QK_BOOT, _______, _______, KC_PSCR, KC_SLCK,
+    [_NL] = LAYOUT_numpad_6x5(
         _______, _______, _______, _______, _______,
-        MO(4),   KC_HOME, KC_UP,   KC_PGUP, _______,
-        MO(3),   KC_LEFT, XXXXXXX, KC_RGHT,
-        MO(2),   KC_END,  KC_DOWN, KC_PGDN, KC_ENT,
-        _______, KC_INS,           KC_DEL
+        _______, _______, _______, _______, _______,
+        _______, KC_P7,   KC_P8,   KC_P9,   _______,
+        _______, KC_P4,   KC_P5,   KC_P6,
+        _______, KC_P1,   KC_P2,   KC_P3,   KC_PENT,
+        _______, KC_P0,            KC_PDOT
     ),
 
-    /*  4 extra layers incase you want to map the top row to layer buttons
+    /*
      * ┌───┬───┬───┬───┬───┐
-     * │ × │TOG│MOD│mod│Ver│
+     * │Rst│TOG│MOD│mod│Ver│
      * ├───┼───┼───┼───┼───┤
-     * │Hu+│St+│Sp+│Br+│TNL│
+     * │Hu+│St+│Sp+│Br+│   │
      * ├───┼───┼───┼───┼───┤
      * │Hu-│St-│Sp-│Br-│   │
      * ├───┼───┼───┼───┤   │
      * │   │   │   │TPK│   │
      * ├───┼───┼───┼───┼───┤
-     * │ · │   │   │TUG│   │
+     * │   │   │   │TUG│   │
      * ├───┼───┴───┼───┤   │
-     * │mo1│       │   │   │
+     * │   │       │   │   │
      * └───┴───────┴───┴───┘
      */
-    [_KBS] = LAYOUT_numpad_6x5(
-        XXXXXXX, RGB_TOG, RGB_MOD, RGB_RMOD, KB_VRSN,
-        RGB_HUI, RGB_SAI, RGB_SPI, RGB_VAI, KB_NLED,
+    [_FN] = LAYOUT_numpad_6x5(
+        QK_BOOT, RGB_TOG, RGB_MOD, RGB_RMOD, KB_VRSN,
+        RGB_HUI, RGB_SAI, RGB_SPI, RGB_VAI, _______,
         RGB_HUD, RGB_SAD, RGB_SPD, RGB_VAD, _______,
-        _______, _______, _______, RGB_TPK,
-        _______, _______, _______, RGB_TUG, _______,
+        MO(_L4), _______, _______, RGB_TPK,
+        MO(_L3), _______, _______, RGB_TUG, _______,
         _______, _______,          _______
     ),
 
@@ -138,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * │   │       │   │   │
      * └───┴───────┴───┴───┘
      */
-    [_EMPTY3] = LAYOUT_numpad_6x5(
+    [_L3] = LAYOUT_numpad_6x5(
         _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,
@@ -147,7 +147,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______,          _______
     ),
 
-    [_EMPTY4] = LAYOUT_numpad_6x5(
+    [_L4] = LAYOUT_numpad_6x5(
         _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,
@@ -231,24 +231,20 @@ void eeconfig_init_user(void) {
 
 void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     // Num-Lock key stuff
-    if (!user_config.led_disable_numlock) {
-
-        if (host_keyboard_led_state().num_lock) {
-            uint8_t v = rgb_matrix_get_val();
-            if (v < ID27_NUM_LOCK_VAL_STEP) {
-                v = ID27_NUM_LOCK_VAL_STEP;
-            } else if (v < (ID27_NUM_LOCK_MAX_BRIGHTNESS - ID27_NUM_LOCK_VAL_STEP)) {
-                if (!user_config.rgb_disable_perkey) {
-                    v += ID27_NUM_LOCK_VAL_STEP;  // inc. by one more step than current brightness
-                }  // else leave as current brightness
-            } else {
-                v = ID27_NUM_LOCK_MAX_BRIGHTNESS;
-            }
-            rgb_matrix_set_color(ID27_NUM_LOCK_KEY_INDEX, v, v, v);  // white, brightness adjusted
-        } else if (user_config.rgb_disable_perkey) {
-            rgb_matrix_set_color(ID27_NUM_LOCK_KEY_INDEX, HSV_OFF);  // off
+    if (layer_state_is(_NL)) {
+        uint8_t v = rgb_matrix_get_val();
+        if (v < ID27_NUM_LOCK_VAL_STEP) {
+            v = ID27_NUM_LOCK_VAL_STEP;
+        } else if (v < (ID27_NUM_LOCK_MAX_BRIGHTNESS - ID27_NUM_LOCK_VAL_STEP)) {
+            if (!user_config.rgb_disable_perkey) {
+                v += ID27_NUM_LOCK_VAL_STEP;  // inc. by one more step than current brightness
+            }  // else leave as current brightness
+        } else {
+            v = ID27_NUM_LOCK_MAX_BRIGHTNESS;
         }
-
+        rgb_matrix_set_color(ID27_NUM_LOCK_KEY_INDEX, v, v, v);  // white, brightness adjusted
+    } else if (user_config.rgb_disable_perkey) {
+        rgb_matrix_set_color(ID27_NUM_LOCK_KEY_INDEX, HSV_OFF);
     }
 }
 
@@ -330,17 +326,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         #endif  // ID27_DISABLE_UNDERGLOW
-
-        case KB_NLED:
-            if (record->event.pressed) {
-                user_config.led_disable_numlock ^= 1;
-                if (!user_config.led_disable_numlock) {
-                    rgb_matrix_indicators_advanced_user(ID27_NUM_LOCK_KEY_INDEX, ID27_NUM_LOCK_KEY_INDEX);
-                } else if (user_config.rgb_disable_perkey) {
-                    rgb_matrix_set_color(ID27_NUM_LOCK_KEY_INDEX, HSV_OFF);  // off
-                }
-            }
-            return false;
 
         case EE_CLR:
             if (!record->event.pressed) {  // on release
