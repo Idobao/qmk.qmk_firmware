@@ -6,7 +6,7 @@
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * ┌───┌───┬───┬───┬───┐
-     * │Esc│Tab│ F1│Cal│Bsp│
+     * │Esc│Mut│Vl-│Vl+│Bsp│
      * ├───┼───┼───┼───┼───┤
      * │Ctr│Num│ / │ * │ - │
      * ├───┼───┼───┼───┼───┤
@@ -20,7 +20,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * └───┴───────┴───┴───┘
      */
     [0] = LAYOUT_numpad_6x5(
-        KC_GESC,   KC_TAB,   KC_F1,   KC_CALC, KC_BSPC,
+        KC_GESC,   KC_MUTE,  KC_VOLD, KC_VOLU, KC_BSPC,
         KC_LCTRL,  KC_NLCK,  KC_PSLS, KC_PAST, KC_PMNS,
         KC_LGUI,   KC_P7,    KC_P8,   KC_P9,   KC_PPLS,
         KC_LALT,   KC_P4,    KC_P5,   KC_P6,
@@ -32,11 +32,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ┌───┌───┐───┬───┬───┐
      * │Rst│TOG│MOD│PSc│SLk│
      * ├───┼───┼───┼───┼───┤
-     * │Hu+│   │Sp-│Sp+│Br-│
+     * │Hu+│ × │Sp-│Sp+│Br-│
      * ├───┼───┼───┼───┼───┤
      * │Hu-│Hom│ ↑ │PgU│   │
      * ├───┼───┼───┼───┤Br+│
-     * │St+│ ← │   │ → │   │
+     * │St+│ ← │ × │ → │   │
      * ├───┼───┼───┼───┤───┤
      * │St-│End│ ↓ │PgD│   │
      * ├───┼───┴───┼───┤Ent│
