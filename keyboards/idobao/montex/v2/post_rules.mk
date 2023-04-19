@@ -4,5 +4,5 @@
 
 UNDERGLOW ?= yes
 ifneq ($(strip $(UNDERGLOW)), yes)
-  OPT_DEFS += -DID27_DISABLE_UNDERGLOW
+    OPT_DEFS += -DID27_DISABLE_UNDERGLOW
 endif

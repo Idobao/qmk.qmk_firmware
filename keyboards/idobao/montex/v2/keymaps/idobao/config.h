@@ -1,4 +1,4 @@
-// Copyright 2022 IBNobody (@IBNobody)
+// Copyright 2022 idobaokb (@idobaokb)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #pragma once
